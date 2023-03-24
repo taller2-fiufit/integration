@@ -1,4 +1,4 @@
-name: fastapi-example
+name: app
 
 # The build section defines how to build the images of your development environment
 # More info: https://www.okteto.com/docs/reference/manifest/#build
@@ -10,7 +10,6 @@ build:
   #  - OKTETO_BUILD_FASTAPI-EXAMPLE_TAG: image tag
   app-deployment:
     context: .
-    dockerfile: Dockerfile
 
 # The deploy section defines how to deploy your development environment
 # More info: https://www.okteto.com/docs/reference/manifest/#deploy
@@ -24,15 +23,13 @@ deploy:
 # The dev section defines how to activate a development container
 # More info: https://www.okteto.com/docs/reference/manifest/#dev
 dev:
-  fastapi-example:
-    image: okteto/python:3
-    command: bash
+  app-deployment:
+    image: ${OKTETO_BUILD_APP_DEPLOYMENT_IMAGE}
     sync:
-      - .:/usr/src/app
+      - .:/app
     forward:
-      - 8080:8080
+      - 80:80
     reverse:
       - 9000:9000
-    autocreate: true
     volumes:
       - /root/.cache/pip
