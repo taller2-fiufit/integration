@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "fastapi-example"
+version = "0.1.0"
+description = ""
+authors = ["Tomas Gruner <47506558+MegaRedHand@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "fastapi_example"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.95.0"
+pydantic = "^1.10.7"
+uvicorn = "^0.21.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
