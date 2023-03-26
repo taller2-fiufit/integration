@@ -16,7 +16,11 @@ spec:
     spec:
       containers:
         - name: fastapi-back
-          image: megaredhand/fastapi-back
+          image: megaredhand/fastapi-back:v1
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: postgres-config
           ports:
             - containerPort: 80
 

@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "fastapi-example"
+name = "fastapi-backend"
 version = "0.1.0"
 description = ""
 authors = ["Tomas Gruner <47506558+MegaRedHand@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "fastapi_example"}]
+packages = [{include = "fastapi-backend"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -12,7 +12,11 @@ fastapi = "^0.95.0"
 pydantic = "^1.10.7"
 uvicorn = "^0.21.1"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+psycopg2 = "^2.9.5"
 
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
 
 [build-system]
 requires = ["poetry-core"]
