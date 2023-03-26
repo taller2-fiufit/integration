@@ -2,8 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: backend-ingress
-  # annotations:
-  # dev.okteto.com/generate-host: backend-ingress
+  annotations:
+    dev.okteto.com/generate-host: backend-ingress
 spec:
   rules:
     - host: backend-pr-2-megaredhand.cloud.okteto.net
