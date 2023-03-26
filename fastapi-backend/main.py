@@ -2,20 +2,28 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
-import os, psycopg2
+import os, time
+import psycopg2
 
 
 def setup():
     global conn
-    conn = psycopg2.connect(
-        dbname=os.environ.get("POSTGRES_DB"),
-        user=os.environ.get("POSTGRES_USER"),
-        password=os.environ.get("POSTGRES_PASSWORD"),
-        # host=os.environ.get("POSTGRES_HOST"),
-        # port=os.environ.get("POSTGRES_PORT"),
-        host="postgres",
-        port=5432,
-    )
+    while True:
+        try:
+            conn = psycopg2.connect(
+                dbname=os.environ.get("POSTGRES_DB"),
+                user=os.environ.get("POSTGRES_USER"),
+                password=os.environ.get("POSTGRES_PASSWORD"),
+                # host=os.environ.get("POSTGRES_HOST"),
+                # port=os.environ.get("POSTGRES_PORT"),
+                host="postgres",
+                port=5432,
+            )
+            break
+        except psycopg2.OperationalError:
+            time.sleep(2)
+            continue
+
     with conn.cursor() as cur:
         query = "CREATE TABLE msg (id INT PRIMARY KEY NOT NULL, msg TEXT NOT NULL);"
         cur.execute(query)

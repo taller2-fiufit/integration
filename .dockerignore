@@ -1,0 +1,6 @@
+.github
+.gitignore
+.stignore
+.dockerignore
+
+k8s
