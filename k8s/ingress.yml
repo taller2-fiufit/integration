@@ -6,7 +6,7 @@ metadata:
   # dev.okteto.com/generate-host: backend-ingress
 spec:
   rules:
-    - host: k8s.local
+    - host: backend
       http:
         paths:
           - path: /

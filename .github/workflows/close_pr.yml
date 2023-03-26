@@ -1,3 +1,5 @@
+name: "Destroy preview"
+
 # file: .github/workflows/preview-closed.yaml
 on:
   pull_request:

@@ -1,3 +1,5 @@
+name: "Create preview"
+
 # file: .github/workflows/preview.yaml
 on:
   pull_request:
