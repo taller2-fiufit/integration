@@ -10,7 +10,7 @@ spec:
   capacity:
     storage: 5Gi # Sets PV Volume
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   hostPath:
     path: "/mnt/data"
 
@@ -24,7 +24,7 @@ metadata:
 spec:
   storageClassName: manual
   accessModes:
-    - ReadWriteMany # Sets read and write access
+    - ReadWriteOnce # Sets read and write access
   resources:
     requests:
       storage: 5Gi # Sets volume size
