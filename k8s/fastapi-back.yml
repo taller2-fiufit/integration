@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: fastapi-back
-          image: megaredhand/fastapi-back:v1
+          image: okteto.dev/fastapi-back
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
