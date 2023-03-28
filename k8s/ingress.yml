@@ -7,7 +7,7 @@ metadata:
     dev.okteto.com/generate-host: backend-ingress
 spec:
   rules:
-    - host: backend-pr-2-megaredhand.cloud.okteto.net
+    - host: "*"
       http:
         paths:
           - path: /
