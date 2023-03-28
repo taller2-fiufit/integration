@@ -14,10 +14,8 @@ def setup():
                 dbname=os.environ.get("POSTGRES_DB"),
                 user=os.environ.get("POSTGRES_USER"),
                 password=os.environ.get("POSTGRES_PASSWORD"),
-                # host=os.environ.get("POSTGRES_HOST"),
-                # port=os.environ.get("POSTGRES_PORT"),
-                host="postgres",
-                port=5432,
+                host=os.environ.get("POSTGRES_SERVICE_HOST"),
+                port=os.environ.get("POSTGRES_SERVICE_PORT"),
             )
             break
         except psycopg2.OperationalError:
