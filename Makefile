@@ -1,4 +1,4 @@
-install:
+deps:
 	poetry install --no-root
 
 lint:

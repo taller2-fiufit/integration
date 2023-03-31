@@ -10,8 +10,12 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Install deps
-        run: make install
+        run: make deps
       - name: Run linter
         run: make lint
       - name: Run MyPy
