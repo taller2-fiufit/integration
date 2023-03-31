@@ -1,5 +1,5 @@
-deps:
-	poetry install --no-root
+install:
+	poetry install
 
 lint:
 	poetry run flake8
