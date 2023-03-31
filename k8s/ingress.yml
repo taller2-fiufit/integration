@@ -2,11 +2,12 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: backend-ingress
-  # annotations:
-  # dev.okteto.com/generate-host: backend-ingress
+  # https://www.okteto.com/docs/cloud/ssl
+  annotations:
+    dev.okteto.com/generate-host: backend-ingress
 spec:
   rules:
-    - host: k8s.local
+    - host: "*"
       http:
         paths:
           - path: /

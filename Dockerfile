@@ -15,9 +15,9 @@ WORKDIR /code
 
 COPY --from=requirements-stage /tmp/requirements.txt /code/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-COPY ./fastapi-backend /code/fastapi-backend
+COPY ./fastapi_backend /code/fastapi_backend
 
 EXPOSE 80
 
 # main.py : app variable
-CMD ["uvicorn", "fastapi-backend.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "fastapi_backend.main:app", "--host", "0.0.0.0", "--port", "80"]
