@@ -1,10 +1,6 @@
 from fastapi import FastAPI
 from fastapi_backend.database import Database, Message
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
-
-import os, time
-import psycopg2
 
 db = Database()
 

@@ -20,4 +20,4 @@ COPY ./fastapi_backend /code/fastapi_backend
 EXPOSE 80
 
 # main.py : app variable
-CMD ["uvicorn", "fastapi-backend.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "fastapi_backend.main:app", "--host", "0.0.0.0", "--port", "80"]
