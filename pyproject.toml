@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "fastapi-backend"
+name = "fastapi_backend"
 version = "0.1.0"
 description = ""
 authors = ["Tomas Gruner <47506558+MegaRedHand@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "fastapi-backend"}]
+packages = [{include = "fastapi_backend"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
