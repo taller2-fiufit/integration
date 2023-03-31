@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 db = Database()
 
 
-def setup():
+def setup() -> None:
     db.connect()
 
 
@@ -21,10 +21,11 @@ app.add_middleware(
 
 
 @app.get("/")
-async def get_msg():
-    return db.get_msg()
+async def get_msg() -> Message:
+    msg = db.get_msg()
+    return msg if msg is not None else Message()
 
 
 @app.put("/")
-async def put_msg(rcvd_msg: Message):
-    db.put_msg(rcvd_msg.msg)
+async def put_msg(rcvd_msg: Message) -> None:
+    db.put_msg(rcvd_msg)

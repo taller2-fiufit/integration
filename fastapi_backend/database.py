@@ -1,7 +1,8 @@
 import os
 import time
-import psycopg2
-import psycopg2.extensions as ext
+from typing import Any, Optional
+import psycopg
+from psycopg.conninfo import make_conninfo
 from pydantic import BaseModel
 
 DB_NAME = os.environ.get("POSTGRES_DB")
@@ -20,36 +21,48 @@ DB_KWARGS = {
 
 
 class Database:
-    def connect(self):
-        print(DB_KWARGS)
+    conn: psycopg.Connection[Any]
+
+    def connect(self) -> None:
+        conninfo = make_conninfo(kwargs=DB_KWARGS)
+        print(conninfo)
+
         while True:
             try:
-                self.conn = psycopg2.connect(**DB_KWARGS)
+                self.conn = psycopg.connect(
+                    conninfo,
+                    autocommit=True,
+                )
                 break
-            except psycopg2.OperationalError:
+            except psycopg.OperationalError:
                 time.sleep(2)
                 continue
 
+        self.init_tables()
+
+    def init_tables(self) -> None:
         try:
             with self.conn.cursor() as cur:
-                query = (
-                    "CREATE TABLE msg (id INT PRIMARY KEY NOT NULL, msg TEXT NOT NULL);"
-                )
+                query = """CREATE TABLE msg
+                    (
+                        id INT PRIMARY KEY NOT NULL,
+                        msg TEXT NOT NULL
+                    );"""
                 cur.execute(query)
-        except psycopg2.Error as e:
+        except psycopg.Error as e:
             print(e)
 
-    def get_msg(self):
+    def get_msg(self) -> Optional["Message"]:
         with self.conn.cursor() as cur:
             query = "SELECT msg FROM msg WHERE id = 0;"
             cur.execute(query)
-            msg = cur.fetchone()
+            msg: Optional[Message] = cur.fetchone()
 
-        return msg[0] if msg is not None else None
+        return msg
 
-    def put_msg(self, msg: str):
+    def put_msg(self, msg: "Message") -> None:
         with self.conn.cursor() as cur:
-            query = f"""
+            query = """
                 INSERT INTO msg
                 VALUES(0, %s)
                 ON CONFLICT(id)
@@ -59,11 +72,4 @@ class Database:
 
 
 class Message(BaseModel):
-    msg = ""
-
-    def __conform__(self, proto):
-        if proto is ext.ISQLQuote:
-            return self
-
-    def getquoted(self):
-        return ext.adapt(self.msg).getquoted()
+    msg: str = ""

@@ -1,6 +1,13 @@
 .github
 .gitignore
 .stignore
-.dockerignore
+.vscode
+venv
+__pycache__
+.pytest_cache
+.mypy_cache
 
 k8s
+README.md
+okteto.yml
+.stignore
