@@ -2,7 +2,7 @@ install:
 	poetry install
 
 lint:
-	poetry run flake8
+	poetry run flake8 fastapi_backend
 
 mypy:
 	poetry run mypy --strict .
