@@ -24,7 +24,7 @@ class Database:
     conn: psycopg.Connection[Any]
 
     def connect(self) -> None:
-        conninfo = make_conninfo(kwargs=DB_KWARGS)
+        conninfo = make_conninfo(**DB_KWARGS)
         print(conninfo)
 
         while True:
