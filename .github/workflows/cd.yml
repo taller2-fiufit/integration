@@ -9,16 +9,18 @@ jobs:
   preview:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
       - name: Context
         uses: okteto/context@latest
         with:
-          url: ${{secrets.OKTETO_URL}}
           token: ${{ secrets.OKTETO_TOKEN }}
 
-      - name: Deploy preview environment
-        uses: okteto/deploy-preview@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy
+        uses: okteto/pipeline@latest
         with:
           name: main-megaredhand
           timeout: 15m

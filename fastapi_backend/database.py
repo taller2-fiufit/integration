@@ -1,6 +1,7 @@
 import os
 import time
 from typing import Any, Optional
+from psycopg.rows import class_row
 import psycopg
 from psycopg.conninfo import make_conninfo
 from pydantic import BaseModel
@@ -53,7 +54,7 @@ class Database:
             print(e)
 
     def get_msg(self) -> Optional["Message"]:
-        with self.conn.cursor() as cur:
+        with self.conn.cursor(row_factory=class_row(Message)) as cur:
             query = "SELECT msg FROM msg WHERE id = 0;"
             cur.execute(query)
             msg: Optional[Message] = cur.fetchone()
