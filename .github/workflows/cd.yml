@@ -1,9 +1,10 @@
-name: "Create preview"
+name: "Deploy preview"
 
-# file: .github/workflows/preview.yaml
 on:
-  push:
+  workflow_run:
+    workflows: ["CI"]
     branches: [ main ]
+    types: [completed]
 
 jobs:
   preview:
