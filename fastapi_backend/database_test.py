@@ -1,8 +1,8 @@
 from typing import Any
-import psycopg
+import psycopg as pg
 
 
-def test_database_init(postgresql: psycopg.Connection[Any]) -> None:
+def test_database_init(postgresql: pg.Connection[Any]) -> None:
     with postgresql.cursor() as cur:
         cur.execute("SELECT version();")
         cur.fetchone()

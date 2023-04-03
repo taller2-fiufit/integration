@@ -24,7 +24,9 @@ DB_KWARGS = {
 class Database:
     conn: Optional[pg.Connection[Any]]
 
-    def init(self, connection: Optional[pg.Connection[Any]] = None) -> None:
+    def __init__(
+        self, connection: Optional[pg.Connection[Any]] = None
+    ) -> None:
         self.conn = connection if connection is not None else self._connect()
         self._init_tables()
 
