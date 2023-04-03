@@ -1,8 +1,8 @@
 import os
 import time
 from typing import Any, Optional
+import psycopg as pg
 from psycopg.rows import class_row
-import psycopg
 from psycopg.conninfo import make_conninfo
 from pydantic import BaseModel
 
@@ -22,26 +22,29 @@ DB_KWARGS = {
 
 
 class Database:
-    conn: psycopg.Connection[Any]
+    conn: Optional[pg.Connection[Any]]
 
-    def connect(self) -> None:
-        conninfo = make_conninfo(**DB_KWARGS)
+    def init(self, connection: Optional[pg.Connection[Any]] = None) -> None:
+        self.conn = connection if connection is not None else self._connect()
+        self._init_tables()
+
+    def _connect(self) -> pg.Connection[Any]:
+        # NOTE: mypy fails without the first parameter
+        conninfo = make_conninfo("", **DB_KWARGS)
         print(conninfo)
 
         while True:
             try:
-                self.conn = psycopg.connect(
+                return pg.connect(
                     conninfo,
                     autocommit=True,
                 )
-                break
-            except psycopg.OperationalError:
+            except pg.OperationalError:
                 time.sleep(2)
                 continue
 
-        self.init_tables()
-
-    def init_tables(self) -> None:
+    def _init_tables(self) -> None:
+        assert self.conn is not None
         try:
             with self.conn.cursor() as cur:
                 query = """CREATE TABLE msg
@@ -50,10 +53,11 @@ class Database:
                         msg TEXT NOT NULL
                     );"""
                 cur.execute(query)
-        except psycopg.Error as e:
+        except pg.Error as e:
             print(e)
 
     def get_msg(self) -> Optional["Message"]:
+        assert self.conn is not None
         with self.conn.cursor(row_factory=class_row(Message)) as cur:
             query = "SELECT msg FROM msg WHERE id = 0;"
             cur.execute(query)
@@ -62,6 +66,7 @@ class Database:
         return msg
 
     def put_msg(self, msg: "Message") -> None:
+        assert self.conn is not None
         with self.conn.cursor() as cur:
             query = """
                 INSERT INTO msg

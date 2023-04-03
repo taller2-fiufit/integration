@@ -1,12 +1,14 @@
+from typing import Optional
 from fastapi import FastAPI
 from fastapi_backend.database import Database, Message
 from fastapi.middleware.cors import CORSMiddleware
+
 
 db = Database()
 
 
 def setup() -> None:
-    db.connect()
+    db.init()
 
 
 app = FastAPI(on_startup=[setup])
