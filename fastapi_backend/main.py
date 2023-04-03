@@ -1,16 +1,15 @@
 from contextlib import asynccontextmanager
-from typing import Annotated, AsyncGenerator, List
+from typing import Annotated, AsyncGenerator
 from fastapi import Depends, FastAPI
-from starlette.types import Lifespan, AppType
 from fastapi_backend.database import Database, Message
 from fastapi.middleware.cors import CORSMiddleware
 
 
 async def get_db() -> Database:
     if not hasattr(get_db, "db_conn"):
-        get_db.db_conn = Database()
+        get_db.db_conn = Database()  # type: ignore[attr-defined]
 
-    return get_db.db_conn
+    return get_db.db_conn  # type: ignore
 
 
 @asynccontextmanager

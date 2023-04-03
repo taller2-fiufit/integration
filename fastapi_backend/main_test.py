@@ -9,8 +9,8 @@ from .database import Message
 def setup_subjects(connection: pg.Connection[Any]) -> TestClient:
     db = Database(connection)
 
-    def get_mock_db():
-        yield db
+    def get_mock_db() -> Database:
+        return db
 
     # https://fastapi.tiangolo.com/advanced/testing-dependencies/
     app.dependency_overrides[get_db] = get_mock_db
