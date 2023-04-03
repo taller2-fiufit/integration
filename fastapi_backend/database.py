@@ -76,7 +76,7 @@ class Database:
                 ON CONFLICT(id)
                 DO UPDATE SET msg = EXCLUDED.msg;
             """
-            cur.execute(query, [msg])
+            cur.execute(query, [msg.msg])
 
 
 class Message(BaseModel):
