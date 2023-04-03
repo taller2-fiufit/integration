@@ -22,5 +22,5 @@ jobs:
       - name: Deploy
         uses: okteto/pipeline@latest
         with:
-          name: main-megaredhand
+          name: example-megaredhand
           timeout: 15m
